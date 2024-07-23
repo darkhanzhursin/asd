@@ -5,18 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.asdlabs</groupId>
-        <artifactId>labs</artifactId>
+        <artifactId>lab2</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>lab2</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>commandPattern</module>
-        <module>bank</module>
-        <module>counter</module>
-        <module>painter</module>
-    </modules>
+    <artifactId>painter</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
