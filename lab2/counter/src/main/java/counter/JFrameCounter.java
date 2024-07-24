@@ -1,4 +1,9 @@
 package counter;
+import command.Command;
+import command.DecrementCommand;
+import command.HistoryList;
+import command.IncrementCommand;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -20,8 +25,8 @@ public class JFrameCounter extends JFrame {
 
     public JFrameCounter() {
         try {
-            jbInit();
             counter = new Counter();
+            jbInit();
             TextFrame textframe = new TextFrame();
             textframe.setVisible(true);
             RectFrame rectframe = new RectFrame();
@@ -53,6 +58,9 @@ public class JFrameCounter extends JFrame {
     }
 
     private void jbInit() throws Exception {
+        HistoryList historyList = new HistoryList();
+        IncrementCommand incrementCommand = new IncrementCommand(counter);
+        DecrementCommand decrementCommand = new DecrementCommand(counter);
         this.getContentPane().setLayout( null );
         this.setSize(new Dimension(297, 169));
         jButtonIncrement.setText("+");
@@ -60,7 +68,8 @@ public class JFrameCounter extends JFrame {
         jButtonIncrement.setActionCommand("increment");
         jButtonIncrement.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        jButtonIncrement_actionPerformed(e);
+                        jButtonIncrement_actionPerformed(e, incrementCommand);
+                        historyList.addCommand(incrementCommand);
                     }
                 });
         jButtondecrement.setText("-");
@@ -68,7 +77,8 @@ public class JFrameCounter extends JFrame {
         jButtondecrement.setActionCommand("decrement");
         jButtondecrement.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        jButtondecrement_actionPerformed(e);
+                        jButtondecrement_actionPerformed(e, decrementCommand);
+                        historyList.addCommand(decrementCommand);
                     }
                 });
         jButtonundo.setText("undo");
@@ -76,6 +86,7 @@ public class JFrameCounter extends JFrame {
         jButtonundo.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         jButtonundo_actionPerformed(e);
+                        historyList.undo();
                     }
                 });
         jButtonredo.setText("redo");
@@ -83,6 +94,7 @@ public class JFrameCounter extends JFrame {
         jButtonredo.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         jButtonredo_actionPerformed(e);
+                        historyList.redo();
                     }
                 });
         this.getContentPane().add(jButtonredo, null);
@@ -91,12 +103,12 @@ public class JFrameCounter extends JFrame {
         this.getContentPane().add(jButtonIncrement, null);
     }
 
-    private void jButtonIncrement_actionPerformed(ActionEvent e) {
-      counter.increment();
+    private void jButtonIncrement_actionPerformed(ActionEvent e, Command command) {
+      command.execute();
     }
 
-    private void jButtondecrement_actionPerformed(ActionEvent e) {
-    	counter.decrement();
+    private void jButtondecrement_actionPerformed(ActionEvent e, Command command) {
+    	command.execute();
     }
 
     private void jButtonundo_actionPerformed(ActionEvent e) {

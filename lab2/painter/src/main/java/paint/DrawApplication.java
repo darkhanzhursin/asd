@@ -1,5 +1,9 @@
 package paint;
 
+import command.DrawCommand;
+import command.HistoryList;
+import command.Stack;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +19,8 @@ class DrawApplication extends JFrame implements ActionListener {
 	JMenuItem undo, redo;
 	int col = 0;
 	Graphics g;
+	HistoryList historyList = new HistoryList();
+	Stack stack = new Stack();
 
 	DrawApplication() {
 		c = getContentPane();
@@ -96,22 +102,35 @@ class DrawApplication extends JFrame implements ActionListener {
 		if (m < 150)m=150;
 		int n= rand.nextInt(500);
 		if (n < 150)n=150;
+
+		Shape shape = null;
 		if (ae.getSource() == circle) {
+			shape = new Shape("Circle", k, l, m, n, col);
 			g.fillOval(k, l, m, n);
 		}
 		if (ae.getSource() == rectangle) {
+			shape = new Shape("Rectangle", k, l, m, n, col);
 			g.fillRect(k, l, m, n);
 		}
 		if (ae.getSource() == line) {
+			shape = new Shape("Line", k, l, m, n, col);
 			g.drawLine(k, l, m, n);
+		}
+
+		if (shape != null) {
+			DrawCommand command = new DrawCommand(shape, g, stack);
+			command.execute();
+			historyList.addCommand(command);
 		}
 		
 		if (ae.getSource() == undo) {
-			System.out.println("perform undo");
+//			System.out.println("perform undo");
+			historyList.undo();
 		}
 
 		if (ae.getSource() == redo) {
-			System.out.println("perform redo");
+//			System.out.println("perform redo");
+			historyList.redo();
 		}
 
 	}
