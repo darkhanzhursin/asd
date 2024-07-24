@@ -22,5 +22,7 @@ public class Application {
 
 		hlist.undo();
 		System.out.println(stack);
+		hlist.redo();
+		System.out.println(stack);
 	}
 }
