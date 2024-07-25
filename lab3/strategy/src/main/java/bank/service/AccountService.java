@@ -6,11 +6,12 @@ import bank.dao.AccountDAO;
 import bank.dao.IAccountDAO;
 import bank.domain.Account;
 import bank.domain.Customer;
+import bank.strategy.InterestCalculator;
 
 
 public class AccountService implements IAccountService {
 	private IAccountDAO accountDAO;
-
+	private InterestCalculator interestCalculator;
 	
 	public AccountService(){
 		accountDAO=new AccountDAO();
@@ -53,5 +54,17 @@ public class AccountService implements IAccountService {
 		fromAccount.transferFunds(toAccount, amount, description);
 		accountDAO.updateAccount(fromAccount);
 		accountDAO.updateAccount(toAccount);
+	}
+
+	@Override
+	public void setInterestCalculator(InterestCalculator interestCalculator) {
+		this.interestCalculator = interestCalculator;
+	}
+
+	@Override
+	public double addInterest(Account account) {
+		double interest = interestCalculator.calculate(account);
+		account.setInterest(interest);
+		return interest;
 	}
 }

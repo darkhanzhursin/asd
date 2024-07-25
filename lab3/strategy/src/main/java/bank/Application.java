@@ -7,7 +7,7 @@ import bank.domain.AccountEntry;
 import bank.domain.Customer;
 import bank.service.AccountService;
 import bank.service.IAccountService;
-
+import bank.strategy.CheckingCalculator;
 
 
 public class Application {
@@ -24,11 +24,15 @@ public class Application {
 		accountService.deposit(4253892, 12450);
 		accountService.transferFunds(4253892, 1263862, 100, "payment of invoice 10232");
 		// show balances
-		
+
+		CheckingCalculator calculator = new CheckingCalculator();
+		accountService.setInterestCalculator(calculator);
+
 		Collection<Account> accountlist = accountService.getAllAccounts();
 		Customer customer = null;
 		for (Account account : accountlist) {
 			customer = account.getCustomer();
+			accountService.addInterest(account);
 			System.out.println("Statement for Account: " + account.getAccountnumber());
 			System.out.println("Account Holder: " + customer.getName());
 			System.out.println("-Date-------------------------"
@@ -42,6 +46,8 @@ public class Application {
 					+ "----------------------------------------");
 			System.out.printf("%30s%30s%20.2f\n\n", "", "Current Balance:",
 					account.getBalance());
+			System.out.printf("%30s%30s%20.2f\n\n", "", "Interest:",
+					account.getInterest());
 		}
 	}
 

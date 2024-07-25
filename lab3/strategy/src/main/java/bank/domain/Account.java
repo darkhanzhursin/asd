@@ -7,7 +7,7 @@ public class Account {
 	long accountnumber;
 	Collection<AccountEntry> entryList = new ArrayList<AccountEntry>();
 	Customer customer;
-
+	double interest;
 	
 	public Account (long accountnr){
 		this.accountnumber = accountnr;
@@ -56,4 +56,11 @@ public class Account {
 		return entryList;
 	}
 
+	public double getInterest() {
+		return interest;
+	}
+
+	public void setInterest(double interest) {
+		this.interest = interest;
+	}
 }
