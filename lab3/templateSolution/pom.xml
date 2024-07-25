@@ -5,19 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.asdlabs</groupId>
-        <artifactId>labs</artifactId>
+        <artifactId>lab3</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>lab3</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>strategy</module>
-        <module>templatemethod</module>
-        <module>bacha</module>
-        <module>strategySolution</module>
-        <module>templateSolution</module>
-    </modules>
+    <artifactId>templateSolution</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
