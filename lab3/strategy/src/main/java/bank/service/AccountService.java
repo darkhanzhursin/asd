@@ -2,11 +2,14 @@ package bank.service;
 
 import java.util.Collection;
 
+import bank.AccountType;
 import bank.dao.AccountDAO;
 import bank.dao.IAccountDAO;
 import bank.domain.Account;
 import bank.domain.Customer;
+import bank.strategy.CheckingCalculator;
 import bank.strategy.InterestCalculator;
+import bank.strategy.SavingCalculator;
 
 
 public class AccountService implements IAccountService {
@@ -17,10 +20,11 @@ public class AccountService implements IAccountService {
 		accountDAO=new AccountDAO();
 	}
 
-	public Account createAccount(long accountNumber, String customerName) {
+	public Account createAccount(long accountNumber, String customerName, AccountType accountType) {
 		Account account = new Account(accountNumber);
 		Customer customer = new Customer(customerName);
 		account.setCustomer(customer);
+		account.setAccountType(accountType);
 		accountDAO.saveAccount(account);
 		return account;
 	}
@@ -62,9 +66,8 @@ public class AccountService implements IAccountService {
 	}
 
 	@Override
-	public double addInterest(Account account) {
+	public void addInterest(Account account) {
 		double interest = interestCalculator.calculate(account);
 		account.setInterest(interest);
-		return interest;
 	}
 }

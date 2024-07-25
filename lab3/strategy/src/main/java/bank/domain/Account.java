@@ -1,5 +1,7 @@
 package bank.domain;
 
+import bank.AccountType;
+
 import java.util.*;
 
 
@@ -8,6 +10,7 @@ public class Account {
 	Collection<AccountEntry> entryList = new ArrayList<AccountEntry>();
 	Customer customer;
 	double interest;
+	AccountType accountType;
 	
 	public Account (long accountnr){
 		this.accountnumber = accountnr;
@@ -62,5 +65,17 @@ public class Account {
 
 	public void setInterest(double interest) {
 		this.interest = interest;
+	}
+
+	public void setEntryList(Collection<AccountEntry> entryList) {
+		this.entryList = entryList;
+	}
+
+	public AccountType getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(AccountType accountType) {
+		this.accountType = accountType;
 	}
 }

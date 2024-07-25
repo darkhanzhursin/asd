@@ -8,14 +8,17 @@ import bank.domain.Customer;
 import bank.service.AccountService;
 import bank.service.IAccountService;
 import bank.strategy.CheckingCalculator;
+import bank.strategy.SavingCalculator;
 
 
 public class Application {
 	public static void main(String[] args) {
 		IAccountService accountService = new AccountService();
+		CheckingCalculator checkingCalculator = new CheckingCalculator();
+		SavingCalculator savingCalculator = new SavingCalculator();
 		// create 2 accounts;
-		accountService.createAccount(1263862, "Frank Brown");
-		accountService.createAccount(4253892, "John Doe");
+		accountService.createAccount(1263862, "Frank Brown", AccountType.SAVINGS);
+		accountService.createAccount(4253892, "John Doe", AccountType.CHECKINGS);
 		//use account 1;
 		accountService.deposit(1263862, 240);
 		accountService.deposit(1263862, 529);
@@ -25,14 +28,19 @@ public class Application {
 		accountService.transferFunds(4253892, 1263862, 100, "payment of invoice 10232");
 		// show balances
 
-		CheckingCalculator calculator = new CheckingCalculator();
-		accountService.setInterestCalculator(calculator);
+
+//		accountService.setInterestCalculator(calculator);
 
 		Collection<Account> accountlist = accountService.getAllAccounts();
 		Customer customer = null;
 		for (Account account : accountlist) {
-			customer = account.getCustomer();
+			if (account.getAccountType().equals(AccountType.CHECKINGS)) {
+				accountService.setInterestCalculator(checkingCalculator);
+			} else {
+				accountService.setInterestCalculator(savingCalculator);
+			}
 			accountService.addInterest(account);
+			customer = account.getCustomer();
 			System.out.println("Statement for Account: " + account.getAccountnumber());
 			System.out.println("Account Holder: " + customer.getName());
 			System.out.println("-Date-------------------------"
