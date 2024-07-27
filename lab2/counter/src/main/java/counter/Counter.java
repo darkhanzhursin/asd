@@ -1,36 +1,33 @@
 package counter;
 
-public class Counter {
+import observer.Subject;
+import state.CounterState;
+
+public class Counter extends Subject {
 	
 	private int count=0;
-	private TextFrame textframe ;
-	private RectFrame rectframe ;
-	private OvalFrame ovalframe ;
-	
+
+	private CounterState counterState;
+
+	public void setCounterState(CounterState counterState) {
+		this.counterState = counterState;
+	}
+
 	public void increment(){
-		count++;
-    	textframe.setCount(count);
-    	rectframe.setCount(count);
-    	ovalframe.setCount(count);
+		counterState.increment();
+		donotify(count);
 	}
 	
 	public void decrement(){
-		count--;
-	   	textframe.setCount(count);
-    	rectframe.setCount(count);
-    	ovalframe.setCount(count);
+		counterState.decrement();
+		donotify(count);
 	}
 
-	public void setTextframe(TextFrame textframe) {
-		this.textframe = textframe;
+	public int getCount() {
+		return count;
 	}
 
-	public void setRectframe(RectFrame rectframe) {
-		this.rectframe = rectframe;
+	public void setCount(int count) {
+		this.count = count;
 	}
-
-	public void setOvalframe(OvalFrame ovalframe) {
-		this.ovalframe = ovalframe;
-	}
-
 }

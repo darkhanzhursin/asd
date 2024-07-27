@@ -2,16 +2,16 @@ package observer;
 
 import counter.TextFrame;
 
-public class TextFrameView implements Observer {
+public class TextObserver implements Observer {
 
     private TextFrame textframe;
 
     @Override
     public void update(int counter) {
-        handleCounter(counter);
+        textframe.setCount(counter);
     }
 
-    void handleCounter(int counter) {
-
+    public void setTextFrame(TextFrame textframe) {
+        this.textframe = textframe;
     }
 }

@@ -3,6 +3,11 @@ import command.Command;
 import command.DecrementCommand;
 import command.HistoryList;
 import command.IncrementCommand;
+import observer.BinaryObserver;
+import observer.OvalObserver;
+import observer.RectObserver;
+import observer.TextObserver;
+import state.SingleDigit;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -10,7 +15,6 @@ import java.awt.Toolkit;
 import java.awt.Rectangle;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,6 +30,18 @@ public class JFrameCounter extends JFrame {
     public JFrameCounter() {
         try {
             counter = new Counter();
+            counter.setCounterState(new SingleDigit(counter));
+
+            BinaryObserver binaryObserver = new BinaryObserver();
+            TextObserver textObserver = new TextObserver();
+            RectObserver rectObserver = new RectObserver();
+            OvalObserver ovalObserver = new OvalObserver();
+
+            counter.addObserver(binaryObserver);
+            counter.addObserver(textObserver);
+            counter.addObserver(rectObserver);
+            counter.addObserver(ovalObserver);
+
             jbInit();
             TextFrame textframe = new TextFrame();
             textframe.setVisible(true);
@@ -33,9 +49,12 @@ public class JFrameCounter extends JFrame {
             rectframe.setVisible(true);
             OvalFrame ovalframe = new OvalFrame();
             ovalframe.setVisible(true);
-            counter.setTextframe(textframe);
-            counter.setRectframe(rectframe);
-            counter.setOvalframe(ovalframe);
+            BinaryFrame binaryFrame = new BinaryFrame();
+            binaryFrame.setVisible(true);
+            textObserver.setTextFrame(textframe);
+            rectObserver.setRectFrame(rectframe);
+            ovalObserver.setOvalFrame(ovalframe);
+            binaryObserver.setBinaryFrame(binaryFrame);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,37 +85,29 @@ public class JFrameCounter extends JFrame {
         jButtonIncrement.setText("+");
         jButtonIncrement.setBounds(new Rectangle(30, 25, 73, 22));
         jButtonIncrement.setActionCommand("increment");
-        jButtonIncrement.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        jButtonIncrement_actionPerformed(e, incrementCommand);
-                        historyList.addCommand(incrementCommand);
-                    }
-                });
+        jButtonIncrement.addActionListener(e -> {
+            jButtonIncrement_actionPerformed(e, incrementCommand);
+            historyList.addCommand(incrementCommand);
+        });
         jButtondecrement.setText("-");
         jButtondecrement.setBounds(new Rectangle(155, 25, 73, 22));
         jButtondecrement.setActionCommand("decrement");
-        jButtondecrement.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        jButtondecrement_actionPerformed(e, decrementCommand);
-                        historyList.addCommand(decrementCommand);
-                    }
-                });
+        jButtondecrement.addActionListener(e -> {
+            jButtondecrement_actionPerformed(e, decrementCommand);
+            historyList.addCommand(decrementCommand);
+        });
         jButtonundo.setText("undo");
         jButtonundo.setBounds(new Rectangle(30, 80, 73, 22));
-        jButtonundo.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        jButtonundo_actionPerformed(e);
-                        historyList.undo();
-                    }
-                });
+        jButtonundo.addActionListener(e -> {
+            jButtonundo_actionPerformed(e);
+            historyList.undo();
+        });
         jButtonredo.setText("redo");
         jButtonredo.setBounds(new Rectangle(155, 80, 73, 22));
-        jButtonredo.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        jButtonredo_actionPerformed(e);
-                        historyList.redo();
-                    }
-                });
+        jButtonredo.addActionListener(e -> {
+            jButtonredo_actionPerformed(e);
+            historyList.redo();
+        });
         this.getContentPane().add(jButtonredo, null);
         this.getContentPane().add(jButtonundo, null);
         this.getContentPane().add(jButtondecrement, null);

@@ -14,7 +14,6 @@
     <modules>
         <module>strategy</module>
         <module>templatemethod</module>
-        <module>bacha</module>
         <module>strategySolution</module>
         <module>templateSolution</module>
     </modules>
