@@ -2,7 +2,6 @@ package with.observer.state;
 
 import with.observer.GateController;
 
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public abstract class MyGateState {

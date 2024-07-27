@@ -4,8 +4,6 @@ import with.observer.GateController;
 
 public class OpeningState extends MyGateState {
 
-    //GateController gateController;
-
     public OpeningState(GateController gateController) {
         super(gateController);
         support = gateController.getSupport();

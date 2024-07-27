@@ -4,8 +4,6 @@ import with.observer.GateController;
 
 public class ClosingState extends MyGateState {
 
-//    GateController gateController;
-
     public ClosingState(GateController gateController) {
         super(gateController);
         support = gateController.getSupport();

@@ -3,7 +3,6 @@ package with.observer.state;
 import with.observer.GateController;
 
 public class ClosedState extends MyGateState {
-    //GateController gateController;
 
     public ClosedState(GateController gateController) {
         super(gateController);

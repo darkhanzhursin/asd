@@ -1,8 +1,6 @@
 package with.observer;
 
-
 import with.observer.state.ClosedState;
-import with.observer.state.OpenState;
 
 public class Application {
 
