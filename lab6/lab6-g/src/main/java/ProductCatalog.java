@@ -1,2 +1,3 @@
-package PACKAGE_NAME;public class ProductCatalog {
+public interface ProductCatalog {
+    void print();
 }

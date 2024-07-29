@@ -10,6 +10,12 @@
     </parent>
 
     <artifactId>lab6</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>compositepattern</module>
+        <module>lab6-a</module>
+        <module>lab6-g</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
