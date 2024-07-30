@@ -3,11 +3,9 @@ import command.Command;
 import command.DecrementCommand;
 import command.HistoryList;
 import command.IncrementCommand;
-import observer.BinaryObserver;
-import observer.OvalObserver;
-import observer.RectObserver;
-import observer.TextObserver;
-import state.SingleDigit;
+import observer.*;
+import service.CounterService;
+import service.ICounterService;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -24,23 +22,24 @@ public class JFrameCounter extends JFrame {
     private JButton jButtondecrement = new JButton();
     private JButton jButtonundo = new JButton();
     private JButton jButtonredo = new JButton();
-    
-    private Counter counter;
+
+    private ICounterService counterService;
 
     public JFrameCounter() {
         try {
-            counter = new Counter();
-            counter.setCounterState(new SingleDigit(counter));
+            counterService = new CounterService();
 
             BinaryObserver binaryObserver = new BinaryObserver();
             TextObserver textObserver = new TextObserver();
             RectObserver rectObserver = new RectObserver();
             OvalObserver ovalObserver = new OvalObserver();
+            Logger logger = new Logger();
 
-            counter.addObserver(binaryObserver);
-            counter.addObserver(textObserver);
-            counter.addObserver(rectObserver);
-            counter.addObserver(ovalObserver);
+            counterService.addObserver(binaryObserver);
+            counterService.addObserver(textObserver);
+            counterService.addObserver(rectObserver);
+            counterService.addObserver(ovalObserver);
+            counterService.addObserver(logger);
 
             jbInit();
             TextFrame textframe = new TextFrame();
@@ -78,8 +77,8 @@ public class JFrameCounter extends JFrame {
 
     private void jbInit() throws Exception {
         HistoryList historyList = new HistoryList();
-        IncrementCommand incrementCommand = new IncrementCommand(counter);
-        DecrementCommand decrementCommand = new DecrementCommand(counter);
+        IncrementCommand incrementCommand = new IncrementCommand(counterService);
+        DecrementCommand decrementCommand = new DecrementCommand(counterService);
         this.getContentPane().setLayout( null );
         this.setSize(new Dimension(297, 169));
         jButtonIncrement.setText("+");

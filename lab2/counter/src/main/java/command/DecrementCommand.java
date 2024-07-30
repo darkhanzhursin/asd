@@ -1,21 +1,21 @@
 package command;
 
-import counter.Counter;
+import service.ICounterService;
 
 public class DecrementCommand implements Command {
 
-    Counter counter;
-    public DecrementCommand(Counter counter) {
-        this.counter = counter;
+    ICounterService counterService;
+    public DecrementCommand(ICounterService counterService) {
+        this.counterService = counterService;
     }
 
     @Override
     public void execute() {
-        counter.decrement();
+        counterService.decrement();
     }
 
     @Override
     public void unExecute() {
-        counter.increment();
+        counterService.increment();
     }
 }

@@ -1,9 +1,8 @@
 package counter;
 
-import observer.Subject;
 import state.CounterState;
 
-public class Counter extends Subject {
+public class Counter {
 	
 	private int count=0;
 
@@ -15,12 +14,12 @@ public class Counter extends Subject {
 
 	public void increment(){
 		counterState.increment();
-		donotify(count);
+		Printer.print(count);
 	}
 	
 	public void decrement(){
 		counterState.decrement();
-		donotify(count);
+		Printer.print(count);
 	}
 
 	public int getCount() {
