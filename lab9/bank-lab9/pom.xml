@@ -5,18 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.asdlabs</groupId>
-        <artifactId>labs</artifactId>
+        <artifactId>lab9</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>lab9</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>factorypattern</module>
-        <module>builderpattern</module>
-        <module>singletonpattern</module>
-        <module>bank-lab9</module>
-    </modules>
+    <artifactId>bank-lab9</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
