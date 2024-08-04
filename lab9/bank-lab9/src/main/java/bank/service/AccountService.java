@@ -1,19 +1,22 @@
 package bank.service;
 
+import java.beans.PropertyChangeSupport;
 import java.util.Collection;
 
 import bank.dao.AccountDAO;
 import bank.dao.IAccountDAO;
 import bank.domain.Account;
 import bank.domain.Customer;
+import bank.integration.IEmail;
 
 
 public class AccountService implements IAccountService {
 	private IAccountDAO accountDAO;
+	private IEmail email;
 
-	
-	public AccountService(){
-		accountDAO=new AccountDAO();
+	public AccountService(IAccountDAO accountDAO, IEmail email){
+		this.accountDAO = accountDAO;
+		this.email = email;
 	}
 
 	public Account createAccount(long accountNumber, String customerName) {
@@ -21,12 +24,14 @@ public class AccountService implements IAccountService {
 		Customer customer = new Customer(customerName);
 		account.setCustomer(customer);
 		accountDAO.saveAccount(account);
+		email.send("creating account");
 		return account;
 	}
 
 	public void deposit(long accountNumber, double amount) {
 		Account account = accountDAO.loadAccount(accountNumber);
 		account.deposit(amount);
+		email.send("deposit");
 		accountDAO.updateAccount(account);
 	}
 
@@ -42,6 +47,7 @@ public class AccountService implements IAccountService {
 	public void withdraw(long accountNumber, double amount) {
 		Account account = accountDAO.loadAccount(accountNumber);
 		account.withdraw(amount);
+		email.send("withdraw");
 		accountDAO.updateAccount(account);
 	}
 
@@ -53,5 +59,6 @@ public class AccountService implements IAccountService {
 		fromAccount.transferFunds(toAccount, amount, description);
 		accountDAO.updateAccount(fromAccount);
 		accountDAO.updateAccount(toAccount);
+		email.send("transferFunds");
 	}
 }
