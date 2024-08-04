@@ -1,22 +1,30 @@
 package bank.service;
 
-import java.beans.PropertyChangeSupport;
 import java.util.Collection;
 
 import bank.dao.AccountDAO;
 import bank.dao.IAccountDAO;
 import bank.domain.Account;
 import bank.domain.Customer;
-import bank.integration.IEmail;
+import bank.email.EmailSender;
+import bank.email.IEmailSender;
+import bank.factory.BankFactory;
+import bank.factory.MyFactory;
 
 
 public class AccountService implements IAccountService {
 	private IAccountDAO accountDAO;
-	private IEmail email;
+	private IEmailSender emailSender;
 
-	public AccountService(IAccountDAO accountDAO, IEmail email){
-		this.accountDAO = accountDAO;
-		this.email = email;
+	
+	public AccountService(){
+		
+		BankFactory bankFactory = new BankFactory();
+		MyFactory factory = bankFactory.getFactoryInstance();
+		
+		accountDAO  = factory.getAccountDAO();
+		emailSender  = factory.getEmailSender();
+
 	}
 
 	public Account createAccount(long accountNumber, String customerName) {
@@ -24,15 +32,14 @@ public class AccountService implements IAccountService {
 		Customer customer = new Customer(customerName);
 		account.setCustomer(customer);
 		accountDAO.saveAccount(account);
-		email.send("creating account");
 		return account;
 	}
 
 	public void deposit(long accountNumber, double amount) {
 		Account account = accountDAO.loadAccount(accountNumber);
 		account.deposit(amount);
-		email.send("deposit");
 		accountDAO.updateAccount(account);
+		emailSender.send("Account with accountnumber "+accountNumber+" has been changed");
 	}
 
 	public Account getAccount(long accountNumber) {
@@ -47,8 +54,8 @@ public class AccountService implements IAccountService {
 	public void withdraw(long accountNumber, double amount) {
 		Account account = accountDAO.loadAccount(accountNumber);
 		account.withdraw(amount);
-		email.send("withdraw");
 		accountDAO.updateAccount(account);
+		emailSender.send("Account with accountnumber "+accountNumber+" has been changed");
 	}
 
 
@@ -59,6 +66,7 @@ public class AccountService implements IAccountService {
 		fromAccount.transferFunds(toAccount, amount, description);
 		accountDAO.updateAccount(fromAccount);
 		accountDAO.updateAccount(toAccount);
-		email.send("transferFunds");
+		emailSender.send("Account with accountnumber "+fromAccountNumber+" has been changed");
+		emailSender.send("Account with accountnumber "+toAccountNumber+" has been changed");
 	}
 }

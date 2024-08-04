@@ -2,14 +2,9 @@ package bank;
 
 import java.util.Collection;
 
-import bank.dao.IAccountDAO;
 import bank.domain.Account;
 import bank.domain.AccountEntry;
 import bank.domain.Customer;
-import bank.factory.EmailFactory;
-import bank.factory.Factory;
-import bank.factory.DAOFactory;
-import bank.integration.IEmail;
 import bank.service.AccountService;
 import bank.service.IAccountService;
 
@@ -17,12 +12,7 @@ import bank.service.IAccountService;
 
 public class Application {
 	public static void main(String[] args) {
-		Factory mainFactory = new Factory();
-		EmailFactory emailFactory = mainFactory.getEmailFactoryInstance();
-		DAOFactory daoFactory = mainFactory.getDaoFactoryInstance();
-		IAccountDAO accountDAO = daoFactory.getAccountDAO();
-		IEmail email = emailFactory.getEmailService();
-		IAccountService accountService = new AccountService(accountDAO, email);
+		IAccountService accountService = new AccountService();
 		// create 2 accounts;
 		accountService.createAccount(1263862, "Frank Brown");
 		accountService.createAccount(4253892, "John Doe");

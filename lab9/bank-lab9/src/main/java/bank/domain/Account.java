@@ -3,6 +3,7 @@ package bank.domain;
 import java.util.*;
 
 
+
 public class Account {
 	long accountnumber;
 	Collection<AccountEntry> entryList = new ArrayList<AccountEntry>();
@@ -27,16 +28,24 @@ public class Account {
 	}
 	public void deposit(double amount){
 		AccountEntry entry = new AccountEntry.Builder()
-						.withAmount(amount)
-								.withDescription("deposit")
-										.build();
+				.withDate(new Date())
+				.withAmount(amount)
+				.withDescription("deposit")
+				.withFromAccountNumber("")
+				.withFromPersonName("")
+				.build();
 		entryList.add(entry);
 	}
+	
 	public void withdraw(double amount){
 		AccountEntry entry = new AccountEntry.Builder()
+				.withDate(new Date())
 				.withAmount(-amount)
 				.withDescription("withdraw")
+				.withFromAccountNumber("")
+				.withFromPersonName("")
 				.build();
+
 		entryList.add(entry);	
 	}
 
@@ -46,18 +55,22 @@ public class Account {
 
 	public void transferFunds(Account toAccount, double amount, String description){
 		AccountEntry fromEntry = new AccountEntry.Builder()
+				.withDate(new Date())
 				.withAmount(-amount)
 				.withDescription(description)
-				.fromAccountNumber("" + toAccount.getAccountnumber())
-				.fromPersonName(toAccount.getCustomer().getName()).build();
+				.withFromAccountNumber(""+toAccount.getAccountnumber())
+				.withFromPersonName(toAccount.getCustomer().getName())
+				.build();
 
 		AccountEntry toEntry = new AccountEntry.Builder()
+				.withDate(new Date())
 				.withAmount(amount)
-						.withDescription(description)
-								.fromAccountNumber("" + toAccount.getAccountnumber())
-										.fromPersonName(toAccount.getCustomer().getName())
-												.build();
-		entryList.add(fromEntry);
+				.withDescription(description)
+				.withFromAccountNumber(""+toAccount.getAccountnumber())
+				.withFromPersonName(toAccount.getCustomer().getName())
+				.build();
+
+		entryList.add(fromEntry);	
 		toAccount.addEntry(toEntry);
 
 	}
