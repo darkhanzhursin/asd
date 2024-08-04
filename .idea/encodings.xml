@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/lab10/lab10-decorator/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lab10/lab10-decorator/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lab10/lab10-visitor/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lab10/lab10-visitor/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lab10/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lab10/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/lab2/bank/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/lab2/bank/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/lab2/commandPattern/src/main/java" charset="UTF-8" />
