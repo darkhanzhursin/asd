@@ -8,6 +8,7 @@ public class Order {
     private Date date;
     private int amount;
     private String state;
+    private int counter;
 
     public Order(Date date, int amount, String state) {
         this.orderlineList = new ArrayList<>();
@@ -20,8 +21,8 @@ public class Order {
         return orderlineList;
     }
 
-    public void setOrderlineList(List<Orderline> orderlineList) {
-        this.orderlineList = orderlineList;
+    public void addOrderline(Orderline orderline) {
+        orderlineList.add(orderline);
     }
 
     public Date getDate() {
@@ -46,5 +47,13 @@ public class Order {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 }

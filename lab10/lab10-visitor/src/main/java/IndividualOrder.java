@@ -16,4 +16,8 @@ public class IndividualOrder extends Order {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
 }

@@ -27,4 +27,8 @@ public class CorporateOrder extends Order {
     public void setContact(String contact) {
         this.contact = contact;
     }
+
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
 }

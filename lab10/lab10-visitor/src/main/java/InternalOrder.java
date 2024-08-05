@@ -15,4 +15,8 @@ public class InternalOrder extends Order {
     public void setDepartment(String department) {
         this.department = department;
     }
+
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
 }
