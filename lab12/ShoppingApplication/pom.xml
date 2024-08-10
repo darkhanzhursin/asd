@@ -5,21 +5,24 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.asdlabs</groupId>
-        <artifactId>labs</artifactId>
+        <artifactId>lab12</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>lab12</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>ShoppingFramework</module>
-        <module>ShoppingApplication</module>
-    </modules>
-
+    <artifactId>ShoppingApplication</artifactId>
+    <groupId>shop</groupId>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>shop</groupId>
+            <artifactId>WebShopFramework</artifactId>
+            <version>2.0</version>
+        </dependency>
+    </dependencies>
 
 </project>
